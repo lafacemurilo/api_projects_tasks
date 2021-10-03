@@ -1403,6 +1403,18 @@ domexception@^2.0.1:
   dependencies:
     webidl-conversions "^5.0.0"
 
+dotenv-config@^0.1.1:
+  version "0.1.1"
+  resolved "https://registry.yarnpkg.com/dotenv-config/-/dotenv-config-0.1.1.tgz#98bf1b57776c629e9cf37cf8d0e8d8508bc55271"
+  integrity sha512-qQESp1ddxhI7Jwmpvf2WFfj0eEG6wa95snrUurUYEPjQ2FIs066EwrPMgB2PwIATNfPQAV6NLC/JX72utTf66A==
+  dependencies:
+    dotenv "~8.0.0"
+
+dotenv@~8.0.0:
+  version "8.0.0"
+  resolved "https://registry.yarnpkg.com/dotenv/-/dotenv-8.0.0.tgz#ed310c165b4e8a97bb745b0a9d99c31bda566440"
+  integrity sha512-30xVGqjLjiUOArT4+M5q9sYdvuR4riM6yK9wMcas9Vbp6zZa+ocC9dp6QoftuhTPhFAiLK/0C5Ni2nou/Bk8lg==
+
 dynamic-dedupe@^0.3.0:
   version "0.3.0"
   resolved "https://registry.yarnpkg.com/dynamic-dedupe/-/dynamic-dedupe-0.3.0.tgz#06e44c223f5e4e94d78ef9db23a6515ce2f962a1"
