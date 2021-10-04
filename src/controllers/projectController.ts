@@ -5,16 +5,34 @@ export interface Projects {
   title: string;
   tasks: [];
 }
+
 export class ProjectController {
-  constructor() {}
+  //constructor() {}
 
+  /**
+   * endpoint: /projects
+   * metodo: GET
+   */
   public getProjects(req: Request, res: Response): void {
-
-    const response: Projects[] = [
-      { id: '1', title: 'Novo projeto', tasks: [] },
-      { id: '2', title: 'Novo projeto', tasks: [] },
-    ];
+    const response: Projects[] = [];
 
     res.status(201).send(response);
+  }
+
+  /**
+   * endpoint /projects
+   * metodo: POST
+   */
+  public setProjects(req: Request, res: Response): void {
+    try {
+      const project: Omit<Projects, 'tasks'> = req.body;
+      //salvar na base
+
+      const returnProject: Projects[] = [{id :"", tasks: [], title: ""}];
+
+      res.status(201).send(returnProject);
+    } catch (err) {
+      res.status(400);
+    }
   }
 }
