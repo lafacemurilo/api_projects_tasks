@@ -15,7 +15,7 @@ export class ProjectController {
    */
   public getProjects(req: Request, res: Response): void {
     const response: Projects[] = [];
-
+  
     res.status(201).send(response);
   }
 
