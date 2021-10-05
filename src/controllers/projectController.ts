@@ -7,7 +7,6 @@ export interface Projects {
   tasks?: [];
 }
 
-
 export class ProjectController {
   //constructor() {}
 
@@ -29,20 +28,24 @@ export class ProjectController {
   public async setProjects(req: Request, res: Response): Promise<void> {
     try {
       let project: Projects = req.body;
-
-      if (project.id && project.title){
       project.tasks = [];
 
-      const returnProject: Projects[] = [await ProjectsModel.create(project)];
-      res.status(201).send(returnProject);
-      }else{
-        res.status(400).send({ErrorSintaxe : 'mandatory fields not informed'});
+      if (project.id && project.title) {
+        const response = await ProjectsModel.findOne({ id: project.id });
+        if (!response) {
+          const returnProject: Projects[] = [
+            await ProjectsModel.create(project),
+          ];
+          res.status(201).send(returnProject);
+        } else {
+          res.status(400).send({ ErrorSintaxe: 'Id registered' });
+        }
+      } else {
+        res.status(400).send({ ErrorSintaxe: 'mandatory fields not informed' });
       }
-
-
     } catch (err) {
       console.log(err);
-      res.status(500).send({FatalError: 'Internal error'});
+      res.status(500).send({ FatalError: 'Internal error' });
     }
   }
 }
