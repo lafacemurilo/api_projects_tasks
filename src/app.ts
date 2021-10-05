@@ -1,5 +1,6 @@
 import express from 'express';
 import projects from './routes/projects';
+import * as database from './database';
 
 const app = express();
 
@@ -10,6 +11,11 @@ app.use((req, res, next) => {
   console.log(`[${req.method}] ${req.url}`);
   return next();
 });
+
+//connection database
+(async function () {
+  await database.connect();
+})();
 
 //routes
 app.use('/', projects);

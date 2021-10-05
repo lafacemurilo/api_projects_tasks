@@ -1,10 +1,12 @@
 import { Request, Response } from 'express';
+import { ProjectsModel } from '../models/ProjectModels';
 
 export interface Projects {
   id: string;
   title: string;
-  tasks: [];
+  tasks?: [];
 }
+
 
 export class ProjectController {
   //constructor() {}
@@ -13,9 +15,10 @@ export class ProjectController {
    * endpoint: /projects
    * metodo: GET
    */
-  public getProjects(req: Request, res: Response): void {
+  public async getProjects(req: Request, res: Response): Promise<void> {
     const response: Projects[] = [];
-  
+    const result = await ProjectsModel.find();
+    console.log('result', result);
     res.status(201).send(response);
   }
 
@@ -23,16 +26,23 @@ export class ProjectController {
    * endpoint /projects
    * metodo: POST
    */
-  public setProjects(req: Request, res: Response): void {
+  public async setProjects(req: Request, res: Response): Promise<void> {
     try {
-      const project: Omit<Projects, 'tasks'> = req.body;
-      //salvar na base
+      let project: Projects = req.body;
 
-      const returnProject: Projects[] = [{id :"", tasks: [], title: ""}];
+      if (project.id && project.title){
+      project.tasks = [];
 
+      const returnProject: Projects[] = [await ProjectsModel.create(project)];
       res.status(201).send(returnProject);
+      }else{
+        res.status(400).send({ErrorSintaxe : 'mandatory fields not informed'});
+      }
+
+
     } catch (err) {
-      res.status(400);
+      console.log(err);
+      res.status(500).send({FatalError: 'Internal error'});
     }
   }
 }
