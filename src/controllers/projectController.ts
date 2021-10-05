@@ -15,10 +15,13 @@ export class ProjectController {
    * metodo: GET
    */
   public async getProjects(req: Request, res: Response): Promise<void> {
-    const response: Projects[] = [];
-    const result = await ProjectsModel.find();
-    console.log('result', result);
+   try{
+    const response = await ProjectsModel.find();
     res.status(201).send(response);
+   } catch(err){
+     console.log("Error mongoDB: ", err)
+     res.status(500).send({Error : "Server Error"});
+   }
   }
 
   /**
