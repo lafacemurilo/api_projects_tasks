@@ -34,7 +34,7 @@ export class ProjectController {
    */
   public async setProjects(req: Request, res: Response): Promise<void> {
     try {
-      let project: Projects = req.body;
+      const project: Projects = req.body;
       project.tasks = [];
 
       if (project.id && project.title) {

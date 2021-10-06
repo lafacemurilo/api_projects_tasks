@@ -20,7 +20,7 @@ describe('Project', () => {
   describe('Get a projects', () => {
     jest.setTimeout(10000);
     it('should return a project with just a few times', async () => {
-      const { body, status } = await global.testRequest.get('/projects');
+      const { status } = await global.testRequest.get('/projects');
       expect(status).toBe(201);
     });
   });
