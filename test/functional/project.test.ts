@@ -18,6 +18,7 @@ describe('Project', () => {
   });
 
   describe('Project functional tests', () => {
+    jest.setTimeout(10000);
     it('should return a project with just a few times', async () => {
       const { body, status } = await global.testRequest.get('/projects');
       expect(status).toBe(201);
@@ -90,11 +91,11 @@ describe('Project', () => {
 
       //creating a new task
       const newTask = { title: 'Nova tarefa' };
-      const response = await global.testRequest
+      const { status, body }= await global.testRequest
         .post('/projects/1/tasks')
         .send(newTask);
-      expect(response).toBe(201);
-      expect(response).toEqual([
+      expect(status).toBe(201);
+      expect(body).toEqual([
         {
           id: '1',
           title: 'Novo projeto',

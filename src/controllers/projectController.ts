@@ -7,6 +7,10 @@ export interface Projects {
   tasks?: [];
 }
 
+export interface Tasks {
+  title: string;
+}
+
 export class ProjectController {
   //constructor() {}
 
@@ -49,6 +53,27 @@ export class ProjectController {
     } catch (err) {
       console.log(err);
       res.status(500).send({ FatalError: 'Internal error' });
+    }
+  }
+
+  /**
+   * endpoint /projects/:id/tasks
+   * metodo: POST
+   */
+  public async setTask(req: Request, res: Response): Promise<void>{
+    try{
+      const task: Tasks = req.body;
+      const id = req.params.id;
+      if (task.title){
+        const query = {id : id.toString()};
+        const update = {$push : {tasks: [task.title.toString()]}};
+        const options = { new: true, upsert: true };
+
+        const response:Projects = await ProjectsModel.findOneAndUpdate(query, update, options);
+        res.status(201).send([response]);
+      }
+    } catch(err){
+
     }
   }
 }
