@@ -6,7 +6,7 @@
   "scripts": {
     "build": "tsc",
     "start:dev": "ts-node-dev 'bin/server.ts'",
-    "start": "yarn build && node dist/src/app.js",
+    "start": "yarn build && node dist/bin/server.js",
     "lint": "eslint ./src ./test --ext .ts",
     "lint:fix": "eslint ./src ./test --ext .ts --fix",
     "style:check": "prettier --check 'src/**/*.ts' 'test/**/*.ts'",
