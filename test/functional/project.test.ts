@@ -139,5 +139,17 @@ describe('Project', () => {
         },
       ]);
     });
+
+
+    it('Should be a status 400', async () => {
+
+      const newTitle = { title: null };
+      const { status, body } = await global.testRequest
+        .put('/projects/1')
+        .send(newTitle);
+
+      expect(status).toBe(400);
+      expect(body).toEqual({ ErrorSintaxe: 'miss title' });
+    });
   });
 });
