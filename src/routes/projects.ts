@@ -9,5 +9,6 @@ const project = new ProjectController();
 router.get('/projects', project.getProjects);
 router.post('/projects', project.setProjects);
 router.post('/projects/:id/tasks', project.setTask);
+router.put('/projects/:id', project.putProjects);
 
 export = router;

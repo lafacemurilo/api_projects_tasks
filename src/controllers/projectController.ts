@@ -79,4 +79,32 @@ export class ProjectController {
       res.status(500).send({Error : "Server Error"});
     }
   }
+
+  /**
+   * endpoint /projects/:id
+   * metodo: PUT
+   */
+  public async putProjects(req: Request, res: Response): Promise<void>{
+    try{
+      const id = req.params.id;
+      const newTitleProject = req.body.title;
+
+      if (newTitleProject){
+        const query = {id : id.toString()};
+        const update = {title : newTitleProject};
+        const options = { new: true, upsert: true };
+
+        const response = await ProjectsModel.findOneAndUpdate(query, update, options);
+        res.status(201).send([response]);
+      }else{
+        res.status(400).send({ ErrorSintaxe: 'miss title' });
+      }
+
+      
+    }catch(err){
+      console.log(err);
+      res.status(500).send({Error : "Server Error"});
+      
+    }
+  }
 }

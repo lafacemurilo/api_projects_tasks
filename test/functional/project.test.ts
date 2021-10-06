@@ -127,7 +127,7 @@ describe('Project', () => {
 
       const newTitle = { title: 'New title' };
       const { status, body } = await global.testRequest
-        .put('/projects/id')
+        .put('/projects/1')
         .send(newTitle);
 
       expect(status).toBe(201);
