@@ -116,7 +116,6 @@ describe('Project', () => {
   });
 
   describe('Put a title in project', () => {
-
     it('Should be a status 201', async () => {
       const newProject: Omit<Projects, 'tasks'> = {
         id: '1',
@@ -140,9 +139,7 @@ describe('Project', () => {
       ]);
     });
 
-
     it('Should be a status 400', async () => {
-
       const newTitle = { title: null };
       const { status, body } = await global.testRequest
         .put('/projects/1')
@@ -150,6 +147,24 @@ describe('Project', () => {
 
       expect(status).toBe(400);
       expect(body).toEqual({ ErrorSintaxe: 'miss title' });
+    });
+  });
+
+  describe('Delete a project', () => {
+    it('Should be a status 201', async () => {
+      const newProject: Omit<Projects, 'tasks'> = {
+        id: '1',
+        title: 'Novo projeto',
+      };
+
+      await global.testRequest.post('/projects').send(newProject);
+
+      const { status, body } = await global.testRequest.delete('/projects/1');
+      console.log(body);
+      expect(status).toBe(201);
+      expect(body).toEqual([
+       {"deletedCount": 1}
+      ]);
     });
   });
 });
