@@ -17,7 +17,7 @@ describe('Project', () => {
     await mongoClient.connection.db.dropDatabase();
   });
 
-  describe('Project functional tests', () => {
+  describe('Get a projects', () => {
     jest.setTimeout(10000);
     it('should return a project with just a few times', async () => {
       const { body, status } = await global.testRequest.get('/projects');
@@ -25,7 +25,7 @@ describe('Project', () => {
     });
   });
 
-  describe('When creating a new project', () => {
+  describe('Post a project', () => {
     it('should successfully create a new project ', async () => {
       const newProject: Omit<Projects, 'tasks'> = {
         id: '19',
@@ -83,7 +83,7 @@ describe('Project', () => {
     });
   });
 
-  describe('When add a new task in a project existent', () => {
+  describe('Post a new task in a project existent', () => {
     it('should successfully create a new task', async () => {
       //setting a new project
       const newProject = { id: '1', title: 'Novo projeto' };
@@ -112,6 +112,32 @@ describe('Project', () => {
         .send(newTask);
       expect(status).toBe(400);
       expect(body).toEqual({ ErrorSintaxe: 'miss title' });
+    });
+  });
+
+  describe('Put a title in project', () => {
+
+    it('Should be a status 201', async () => {
+      const newProject: Omit<Projects, 'tasks'> = {
+        id: '1',
+        title: 'Novo projeto',
+      };
+
+      await global.testRequest.post('/projects').send(newProject);
+
+      const newTitle = { title: 'New title' };
+      const { status, body } = await global.testRequest
+        .put('/projects/id')
+        .send(newTitle);
+
+      expect(status).toBe(201);
+      expect(body).toEqual([
+        {
+          id: '1',
+          title: 'New title',
+          tasks: [],
+        },
+      ]);
     });
   });
 });
