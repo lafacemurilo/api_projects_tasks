@@ -162,9 +162,7 @@ describe('Project', () => {
       const { status, body } = await global.testRequest.delete('/projects/1');
       console.log(body);
       expect(status).toBe(201);
-      expect(body).toEqual([
-       {"deletedCount": 1}
-      ]);
+      expect(body).toEqual([{ deletedCount: 1 }]);
     });
   });
 });
