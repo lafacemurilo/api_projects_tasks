@@ -1,32 +1,84 @@
 import { Projects } from '@src/controllers/projectController';
+import mongoose, { mongo } from 'mongoose';
+import * as database from '../../src/database';
 
-describe('Beach project functional tests', () => {
-  it('should return a project with just a few times', async () => {
-    const { body, status } = await global.testRequest.get('/projects');
-    expect(status).toBe(201);
+describe('Project', () => {
+  let mongoClient: typeof mongoose;
+
+  beforeAll(async () => {
+    mongoClient = await database.connect();
   });
-});
 
-describe('When creating a new project', () => {
-  it('should successfully create a new project ', async () => {
-    const newProject: Omit<Projects, 'tasks'> = {
-      id: '1',
-      title: 'Novo projeto',
-    };
+  afterAll(async () => {
+    await mongoClient.connection.close();
+  });
 
-    const response = await global.testRequest
-      .post('/projects')
-      .send(newProject);
+  afterEach(async () => {
+    await mongoClient.connection.db.dropDatabase();
+  });
 
-    expect(response.status).toBe(201);
-    expect(response.body).toEqual(
-      expect.arrayContaining([
-        {
-          id: expect.any(String),
-          title: expect.any(String),
-          tasks: expect.any(Array),
-        },
-      ])
-    );
+  describe('Project functional tests', () => {
+    it('should return a project with just a few times', async () => {
+      const { body, status } = await global.testRequest.get('/projects');
+      expect(status).toBe(201);
+    });
+  });
+
+  describe('When creating a new project', () => {
+    it('should successfully create a new project ', async () => {
+      const newProject: Omit<Projects, 'tasks'> = {
+        id: '19',
+        title: 'Novo projeto',
+      };
+
+      const response = await global.testRequest
+        .post('/projects')
+        .send(newProject);
+
+      expect(response.status).toBe(201);
+      expect(response.body).toEqual(
+        expect.arrayContaining([
+          {
+            id: expect.any(String),
+            title: expect.any(String),
+            tasks: expect.any(Array),
+          },
+        ])
+      );
+    });
+
+    it('should error 400 because same ID repeated', async () => {
+      const newProject: Omit<Projects, 'tasks'> = {
+        id: '19',
+        title: 'Novo projeto',
+      };
+      //gravar um projeto
+      await global.testRequest
+        .post('/projects')
+        .send(newProject);
+
+      //gravar com o mesmo id
+      const response = await global.testRequest
+        .post('/projects')
+        .send(newProject);
+
+      expect(response.status).toBe(400);
+      expect(response.body).toEqual({ ErrorSintaxe: 'Id registered' });
+    });
+
+    it('should error 400 invalid data', async () => {
+      const newProject = {
+        idade: '19',
+        titles: 'Novo projeto',
+      };
+
+      //gravar com o mesmo id
+      const response = await global.testRequest
+        .post('/projects')
+        .send(newProject);
+
+      expect(response.status).toBe(400);
+      expect(response.body).toEqual({ ErrorSintaxe: 'mandatory fields not informed' });
+    });
   });
 });

@@ -1,6 +1,5 @@
 import express from 'express';
 import projects from './routes/projects';
-import * as database from './database';
 
 const app = express();
 
@@ -13,9 +12,9 @@ app.use((req, res, next) => {
 });
 
 //connection database
-(async function () {
+/*(async function () {
   await database.connect();
-})();
+})();*/
 
 //routes
 app.use('/', projects);
