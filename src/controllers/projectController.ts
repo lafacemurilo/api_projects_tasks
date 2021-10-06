@@ -71,9 +71,12 @@ export class ProjectController {
 
         const response:Projects = await ProjectsModel.findOneAndUpdate(query, update, options);
         res.status(201).send([response]);
+      }else{
+        res.status(400).send({ ErrorSintaxe: 'miss title' });
       }
     } catch(err){
-
+      console.log(err);
+      res.status(500).send({Error : "Server Error"});
     }
   }
 }

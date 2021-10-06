@@ -91,7 +91,7 @@ describe('Project', () => {
 
       //creating a new task
       const newTask = { title: 'Nova tarefa' };
-      const { status, body }= await global.testRequest
+      const { status, body } = await global.testRequest
         .post('/projects/1/tasks')
         .send(newTask);
       expect(status).toBe(201);
@@ -102,6 +102,16 @@ describe('Project', () => {
           tasks: ['Nova tarefa'],
         },
       ]);
+    });
+
+    it('should return miss params in creating a new task and status 400', async () => {
+      //creating a new task
+      const newTask = { title: null };
+      const { status, body } = await global.testRequest
+        .post('/projects/1/tasks')
+        .send(newTask);
+      expect(status).toBe(400);
+      expect(body).toEqual({ ErrorSintaxe: 'miss title' });
     });
   });
 });
