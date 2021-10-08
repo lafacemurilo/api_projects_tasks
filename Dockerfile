@@ -4,6 +4,4 @@ COPY  . /var/www
 WORKDIR /var/www
 RUN npm i
 RUN npm ci
-RUN yarn test:function
-RUN yarn test:unit
-ENTRYPOINT yarn start:dev
+ENTRYPOINT yarn start
