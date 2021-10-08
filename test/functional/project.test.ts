@@ -108,7 +108,7 @@ describe('Project', () => {
       //creating a new project
       const newProject = { id: '1', title: 'Novo projeto' };
       await global.testRequest.post('/projects').send(newProject);
-      
+
       //creating a new task
       const newTask = { title: null };
       const { status, body } = await global.testRequest
@@ -147,7 +147,7 @@ describe('Project', () => {
       //creating a project
       const newProject = { id: '1', title: 'Novo projeto' };
       await global.testRequest.post('/projects').send(newProject);
-     
+
       const newTitle = { title: null };
       const { status, body } = await global.testRequest
         .put('/projects/1')

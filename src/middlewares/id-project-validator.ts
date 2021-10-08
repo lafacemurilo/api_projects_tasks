@@ -6,8 +6,6 @@ export async function searchProject(
   res: Partial<Response>,
   next: NextFunction
 ): Promise<void> {
-
-
   if (req.params?.id) {
     const response = await ProjectsModel.findOne({ id: req.params?.id });
     if (response) {
