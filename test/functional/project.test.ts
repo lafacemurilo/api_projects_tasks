@@ -105,6 +105,10 @@ describe('Project', () => {
     });
 
     it('should return miss params in creating a new task and status 400', async () => {
+      //creating a new project
+      const newProject = { id: '1', title: 'Novo projeto' };
+      await global.testRequest.post('/projects').send(newProject);
+      
       //creating a new task
       const newTask = { title: null };
       const { status, body } = await global.testRequest
@@ -140,6 +144,10 @@ describe('Project', () => {
     });
 
     it('Should be a status 400', async () => {
+      //creating a project
+      const newProject = { id: '1', title: 'Novo projeto' };
+      await global.testRequest.post('/projects').send(newProject);
+     
       const newTitle = { title: null };
       const { status, body } = await global.testRequest
         .put('/projects/1')

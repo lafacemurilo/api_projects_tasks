@@ -2,12 +2,14 @@ import { ProjectsModel } from '../models/ProjectModels';
 import { NextFunction, Request, Response } from 'express';
 
 export async function searchProject(
-  req: Request,
-  res: Response,
+  req: Partial<Request>,
+  res: Partial<Response>,
   next: NextFunction
 ): Promise<void> {
-  if (req.params.id) {
-    const response = await ProjectsModel.findOne({ id: req.params.id });
+
+
+  if (req.params?.id) {
+    const response = await ProjectsModel.findOne({ id: req.params?.id });
     if (response) {
       next();
     } else {
